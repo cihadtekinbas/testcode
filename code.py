@@ -7,10 +7,10 @@ from scipy.sparse.linalg import svds, eigs
 from scipy.sparse import hstack
 from scipy.sparse import vstack
 
-trainA = sparse.load_npz("data\Aratings-transform_user.npz")
-testB = sparse.load_npz("data\Bratings-transform_user.npz")
-trainC=sparse.load_npz("data\Cratings-transform_user.npz")
-testD=sparse.load_npz("data\Dratings-transform_user.npz")
+trainA = sparse.load_npz("./data/Aratings-transform_user.npz")
+testB = sparse.load_npz("./data/Bratings-transform_user.npz")
+trainC=sparse.load_npz("./data/Cratings-transform_user.npz")
+testD=sparse.load_npz("./data/Dratings-transform_user.npz")
 
 
 print(trainA.shape)
@@ -66,10 +66,10 @@ import numpy as np
 from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import svds, eigs
 # U, s, V=np.linalg.svd(utilMat, full_matrices=False)
-u, s, vt = svds(A_B_C_D, k=13512) 
+u, s, vt = svds(A_B_C_D, k=3512) 
 
 s=np.diag(s)
-k=13512
+k=3512
 s=s[0:k,0:k]
 u=u[:,0:k]
 vt=vt[0:k,:]
@@ -90,7 +90,7 @@ for i in C_D.row:
 for i in recommend:
     recommend[i]=UsV[251457+i,18803:]
     
-recommend={}
+
 f=open("recommend","w")
 f.write(str(recommend))
 f.close()
