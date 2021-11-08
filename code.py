@@ -7,10 +7,10 @@ from scipy.sparse.linalg import svds, eigs
 from scipy.sparse import hstack
 from scipy.sparse import vstack
 
-trainA = sparse.load_npz("./data/Aratings-transform_user.npz")
-testB = sparse.load_npz("./data/Bratings-transform_user.npz")
-trainC=sparse.load_npz("./data/Cratings-transform_user.npz")
-testD=sparse.load_npz("./data/Dratings-transform_user.npz")
+trainA = sparse.load_npz("data\Aratings-transform_user.npz")
+testB = sparse.load_npz("data\Bratings-transform_user.npz")
+trainC=sparse.load_npz("data\Cratings-transform_user.npz")
+testD=sparse.load_npz("data\Dratings-transform_user.npz")
 
 
 print(trainA.shape)
@@ -66,10 +66,10 @@ import numpy as np
 from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import svds, eigs
 # U, s, V=np.linalg.svd(utilMat, full_matrices=False)
-u, s, vt = svds(A_B_C_D, k=3512) 
+u, s, vt = svds(A_B_C_D, k=13512)
 
 s=np.diag(s)
-k=3512
+k=13512
 s=s[0:k,0:k]
 u=u[:,0:k]
 vt=vt[0:k,:]
@@ -89,18 +89,28 @@ for i in C_D.row:
         recommend[i]=[]
 for i in recommend:
     recommend[i]=UsV[251457+i,18803:]
-    
+   
 
 f=open("recommend","w")
-f.write(str(recommend))
+for x in recommend:
+    ind = np.argpartition(recommend[x], -10)[-10:]
+    f.write(str(ind))
+    f.write("\t")
+
+    f.write(str(recommend[x][ind]))
+    f.write("\n")
 f.close()
+
+# f=open("recommend","w")
+# f.write(str(recommend))
+# f.close()
 # keeplist={}
 # for i in range(len(C_D.row)):
 #     if(C_D.col[i]>18803):
 #         if C_D.row[i] not in keeplist:
 #             keeplist[C_D.row[i]]=[]
 #         keeplist[C_D.row[i]].append(C_D.col[i])
-        
+       
 # for i in range(len(recommend)):
 #     if i in recommend:
 
